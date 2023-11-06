@@ -1,11 +1,26 @@
+import java.util.stream.IntStream;
+import java.util.Arrays;
+
 public class Spiral {
-//    public static String toSpiral(String s) {
-//        // complete solution
-//        Integer charLength = (int) Math.ceil(Math.sqrt(s.length()));
-//
-//
-//        return "";
-//    }
+    public static String toSpiral(String s) {
+
+        int charLength = (int) Math.ceil(Math.sqrt(s.length()));
+
+        int [][] spiralArray = arrayBuilder((charLength));
+
+        String[] spiral = new String[charLength];
+        Arrays.fill(spiral, " ".repeat(charLength));
+
+        IntStream.range(0, s.length())
+                .forEach(i -> {
+                    int y = spiralArray[i][0];
+                    int x = spiralArray[i][1];
+                    String c = spiral[y];
+                    spiral[y] = c.substring(0, x) + s.charAt(i) + c.substring(x + 1);
+                });
+
+        return String.join("\n", spiral);
+    }
 
     public static int[][] arrayBuilder (int i) {
         int j = 0;
@@ -26,7 +41,7 @@ public class Spiral {
 
         while (j < i*i) {
 
-            spiralArray[j] = new int[] {x, y};
+            spiralArray[j] = new int[] {y, x};
 
             if (x == upperBoundX && dx == 1) {
                 dx = 0;
